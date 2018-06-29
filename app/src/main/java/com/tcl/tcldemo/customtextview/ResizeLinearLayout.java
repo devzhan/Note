@@ -2,6 +2,7 @@ package com.tcl.tcldemo.customtextview;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 public class ResizeLinearLayout extends LinearLayout {

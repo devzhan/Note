@@ -34,6 +34,7 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
         <com.tcl.tcldemo.customtextview.RichEditText
             android:id="@+id/editor_edit_area"
             android:layout_marginBottom="16dp"
@@ -48,7 +49,9 @@
             android:lineSpacingExtra="4.6dp"
             android:scrollbars="vertical"
             android:textColorHint="#bfbfbf"
+            android:paddingBottom="16dp"
             android:textSize="16sp" />
+
         </ScrollView>
 
 </RelativeLayout>
