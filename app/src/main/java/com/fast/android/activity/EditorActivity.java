@@ -1,4 +1,4 @@
-package com.tcl.tcldemo.customtextview;
+package com.fast.android.activity;
 
 import android.app.Activity;
 import android.content.Context;
@@ -9,7 +9,6 @@ import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -25,6 +24,8 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.tcl.tcldemo.R;
+import com.fast.android.view.rich.ResizeLinearLayout;
+import com.fast.android.view.rich.RichEditText;
 
 import java.lang.reflect.Field;
 

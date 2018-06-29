@@ -1,4 +1,4 @@
-<com.tcl.tcldemo.customtextview.ResizeLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.fast.android.view.rich.ResizeLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/editor_base_content"
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
@@ -35,7 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        <com.tcl.tcldemo.customtextview.RichEditText
+        <com.fast.android.view.rich.RichEditText
             android:id="@+id/editor_edit_area"
             android:layout_marginBottom="16dp"
             android:layout_width="match_parent"
@@ -106,4 +106,4 @@
             android:background="#afafaf" />
     </LinearLayout>
 
-</com.tcl.tcldemo.customtextview.ResizeLinearLayout>
+</com.fast.android.view.rich.ResizeLinearLayout>

@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".customtextview.EditorActivity">
+    tools:context="com.fast.android.activity.EditorActivity">
 
     <com.tcl.tcldemo.customtextview.CustomTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/ctv"
         android:visibility="gone"/>
-    <com.tcl.tcldemo.customtextview.RichEditText
+    <com.fast.android.view.rich.RichEditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/ret"/>

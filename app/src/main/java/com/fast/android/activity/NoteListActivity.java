@@ -1,13 +1,13 @@
-package com.tcl.tcldemo;
+package com.fast.android.activity;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-import com.tcl.tcldemo.customtextview.EditorActivity;
+import com.tcl.tcldemo.R;
 
-public class MainActivity extends AppCompatActivity {
+public class NoteListActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.bt_textview).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, EditorActivity.class);
+                Intent intent = new Intent(NoteListActivity.this, EditorActivity.class);
                 startActivity(intent);
             }
         });

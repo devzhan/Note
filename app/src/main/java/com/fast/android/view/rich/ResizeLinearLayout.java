@@ -1,4 +1,4 @@
-package com.tcl.tcldemo.customtextview;
+package com.fast.android.view.rich;
 
 import android.content.Context;
 import android.util.AttributeSet;

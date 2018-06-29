@@ -1,4 +1,4 @@
-package com.tcl.tcldemo.customtextview;
+package com.fast.android.view.rich;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
