@@ -17,7 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".customtextview.EditorActivity"
-            android:windowSoftInputMode="stateUnchanged"></activity>
+            android:windowSoftInputMode="adjustResize|stateUnchanged"></activity>
     </application>
 
 </manifest>

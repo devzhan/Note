@@ -9,9 +9,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.text.Editable;
+import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextWatcher;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.text.style.ImageSpan;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -35,6 +38,35 @@ public class RichEditText extends EditText {
 
     private static final String TAG = "RichNote";
     private ImageTextWatcher imageTextWatcher;
+    private RichClickableSpan richClickableSpan;
+
+    public ClickableSpanListener getClickableSpanListener() {
+        return clickableSpanListener;
+    }
+
+    public void setClickableSpanListener(ClickableSpanListener clickableSpanListener) {
+        this.clickableSpanListener = clickableSpanListener;
+    }
+
+    ClickableSpanListener clickableSpanListener;
+
+
+    private interface ClickableSpanListener {
+        /**
+         * 添加图片点击回调用
+         */
+        void onSpanClick(int star, int end);
+    }
+
+
+    private class RichClickableSpan implements ClickableSpanListener {
+
+
+        @Override
+        public void onSpanClick(int star, int end) {
+
+        }
+    }
 
     public RichEditText(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -57,6 +89,9 @@ public class RichEditText extends EditText {
         this.mContext = context;
         imageTextWatcher = new ImageTextWatcher();
         addTextChangedListener(imageTextWatcher);
+//        richClickableSpan = new RichClickableSpan();
+//        setClickableSpanListener(richClickableSpan);
+
     }
 
 
@@ -86,10 +121,12 @@ public class RichEditText extends EditText {
         }
 
         int start = this.getSelectionStart(); // 设置欲添加的位置
+
         mEditable.insert(start, spanString); // 设置spanString要添加的位置
         Log.i(TAG, "content===" + mEditable.toString());
         this.setText(mEditable);
         this.setSelection(start, spanString.length());
+        setSpanClickable();
     }
 
     /**
@@ -250,7 +287,6 @@ public class RichEditText extends EditText {
         @Override
         public void afterTextChanged(Editable editable) {
             mEditable = editable;
-
         }
     }
 
@@ -275,15 +311,55 @@ public class RichEditText extends EditText {
         //控件内容的总高度
         int scrollRange = this.getLayout().getHeight();
         //控件实际显示的高度
-        int scrollExtent = this.getHeight() - this.getCompoundPaddingTop() -this.getCompoundPaddingBottom();
+        int scrollExtent = this.getHeight() - this.getCompoundPaddingTop() - this.getCompoundPaddingBottom();
         //控件内容总高度与实际显示高度的差值
         int scrollDifference = scrollRange - scrollExtent;
 
-        if(scrollDifference == 0) {
+        if (scrollDifference == 0) {
             return false;
         }
 
         return (scrollY > 0) || (scrollY < scrollDifference - 1);
+    }
+
+
+    public void setSpanClickable() {
+        Spanned s = getText();
+        if (s == null) {
+            return;
+        }
+        //setMovementMethod很重要，不然ClickableSpan无法获取点击事件。
+        setMovementMethod(LinkMovementMethod.getInstance());
+        ImageSpan[] imageSpans = s.getSpans(0, s.length(), ImageSpan.class);
+
+        for (ImageSpan span : imageSpans) {
+            final String image_src = span.getSource();
+            final int start = s.getSpanStart(span);
+            final int end = s.getSpanEnd(span);
+
+            Log.i(TAG, "setSpanClickable , image_src = " + image_src + " , start = " + start + " , end = " + end);
+
+            ClickableSpan click_span = new ClickableSpan() {
+                @Override
+                public void onClick(View widget) {
+                    setCursorVisible(false);
+                    if (clickableSpanListener != null) {
+                        clickableSpanListener.onSpanClick(start, end);
+                    }
+
+                }
+            };
+            ClickableSpan[] click_spans = s.getSpans(start, end,
+                    ClickableSpan.class);
+            if (click_spans.length != 0) {
+                // remove all click spans
+                for (ClickableSpan c_span : click_spans) {
+                    ((Spannable) s).removeSpan(c_span);
+                }
+            }
+            ((Spannable) s).setSpan(click_span, start, end,
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
     }
 
 }
