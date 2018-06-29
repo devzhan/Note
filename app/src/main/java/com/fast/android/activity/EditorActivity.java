@@ -16,9 +16,11 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.fast.android.utils.InputUtils;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -29,7 +31,7 @@ import com.fast.android.view.rich.RichEditText;
 
 import java.lang.reflect.Field;
 
-public class EditorActivity extends Activity {
+public class EditorActivity extends Activity implements View.OnClickListener {
     private static  final String TAG = "RichNote";
     private ResizeLinearLayout baseContent;
 
@@ -54,6 +56,9 @@ public class EditorActivity extends Activity {
     private boolean flag = false; // 控制何时显示下方tools
 
     private InputHandler inputHandler = new InputHandler();
+    private TextView mTextViewEditorWater;
+    private LinearLayout mLinearLayout;
+
 
     private class InputHandler extends Handler {
         @Override
@@ -83,7 +88,7 @@ public class EditorActivity extends Activity {
         setContentView(R.layout.activity_editor);
         baseContent = (ResizeLinearLayout) findViewById(R.id.editor_base_content);
 
-        completeImg = (TextView) findViewById(R.id.editor_edit_complete);
+        completeImg = (TextView) findViewById(R.id.editor_attachment);
         galleryImg = (ImageView) findViewById(R.id.editor_gallery_img);
 
         articleTitle = (EditText) findViewById(R.id.editor_article_title);
@@ -128,6 +133,10 @@ public class EditorActivity extends Activity {
                 gallery();
             }
         });
+
+        mTextViewEditorWater = findViewById(R.id.editor_water);
+        mLinearLayout = findViewById(R.id.ll_operate);
+        mTextViewEditorWater.setOnClickListener(this);
     }
 
     /**
@@ -287,6 +296,19 @@ public class EditorActivity extends Activity {
         ImageLoader.getInstance().init(config.build());
 
     }
+    @Override
+    public void onClick(View v) {
+        int viewId = v.getId();
+        switch (viewId){
+            case R.id.editor_water:
+                InputUtils.HideKeyboard(v);
+                if (mLinearLayout.getVisibility()==View.GONE){
+                    mLinearLayout.setVisibility(View.VISIBLE);
+                }
+                break;
 
+        }
+
+    }
 }
 

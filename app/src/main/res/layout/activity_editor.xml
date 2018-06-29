@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
     android:background="#ffffff"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <EditText
         android:id="@+id/editor_article_title"
@@ -30,31 +30,32 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" >
+        android:layout_weight="1">
+
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        <com.fast.android.view.rich.RichEditText
-            android:id="@+id/editor_edit_area"
-            android:layout_marginBottom="16dp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginTop="16dp"
-            android:background="#ffffff"
-            android:gravity="left|top"
-            android:hint="内容"
-            android:lineSpacingExtra="4.6dp"
-            android:scrollbars="vertical"
-            android:textColorHint="#bfbfbf"
-            android:paddingBottom="16dp"
-            android:textSize="16sp" />
+            <com.fast.android.view.rich.RichEditText
+                android:id="@+id/editor_edit_area"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="16dp"
+                android:background="#ffffff"
+                android:gravity="left|top"
+                android:hint="内容"
+                android:lineSpacingExtra="4.6dp"
+                android:paddingBottom="16dp"
+                android:scrollbars="vertical"
+                android:textColorHint="#bfbfbf"
+                android:textSize="16sp" />
 
         </ScrollView>
 
-</RelativeLayout>
+    </RelativeLayout>
 
     <TextView
         android:layout_width="match_parent"
@@ -64,22 +65,59 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <LinearLayout
             android:id="@+id/tools_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal" >
+            android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/editor_edit_complete"
-                android:layout_width="wrap_content"
+                android:id="@+id/editor_attachment"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
-                android:text="完成"
+                android:layout_weight="1"
+                android:text="附件"
+                android:textColor="#41aaf2"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/editor_reminder"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_weight="1"
+                android:text="提醒"
+                android:textColor="#41aaf2"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/editor_water"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_weight="1"
+                android:text="水印"
+                android:textColor="#41aaf2"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/editor_font"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_weight="1"
+                android:text="字体"
                 android:textColor="#41aaf2"
                 android:textSize="16sp" />
 
@@ -87,7 +125,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
-                android:orientation="horizontal" >
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/editor_gallery_img"
@@ -105,5 +144,13 @@
             android:layout_height="0.5dp"
             android:background="#afafaf" />
     </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:id="@+id/ll_operate"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:background="@color/colorAccent"
+        android:visibility="visible">
 
+    </LinearLayout>
 </com.fast.android.view.rich.ResizeLinearLayout>
