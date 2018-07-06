@@ -29,6 +29,7 @@ import com.tcl.tcldemo.R;
 import com.fast.android.view.rich.ResizeLinearLayout;
 import com.fast.android.view.rich.RichEditText;
 
+import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;
 
 public class EditorActivity extends Activity implements View.OnClickListener {
@@ -55,29 +56,35 @@ public class EditorActivity extends Activity implements View.OnClickListener {
 
     private boolean flag = false; // 控制何时显示下方tools
 
-    private InputHandler inputHandler = new InputHandler();
+    private InputHandler inputHandler = new InputHandler(this);
     private TextView mTextViewEditorWater;
     private LinearLayout mLinearLayout;
 
 
     private class InputHandler extends Handler {
+        WeakReference<Activity> weakReference;
+
+        public InputHandler(Activity activity) {
+            weakReference = new WeakReference<Activity>(activity);
+        }
         @Override
         public void handleMessage(Message msg) {
-            // TODO Auto-generated method stub
-            switch (msg.what) {
-                case RESIZE_LAYOUT:
-                    if (msg.arg1 == SHOW_TOOLS) {
-                        currentStatus = SHOW_TOOLS;
-                    } else {
-                        currentStatus = SHOW_KEY_BOARD;
-                        baseLayoutHeight = baseContent.getHeight();
-                    }
-                    break;
+            if (weakReference.get() != null) {
+                switch (msg.what) {
+                    case RESIZE_LAYOUT:
+                        if (msg.arg1 == SHOW_TOOLS) {
+                            currentStatus = SHOW_TOOLS;
+                        } else {
+                            currentStatus = SHOW_KEY_BOARD;
+                            baseLayoutHeight = baseContent.getHeight();
+                        }
+                        break;
 
-                default:
-                    break;
+                    default:
+                        break;
+                }
+                super.handleMessage(msg);
             }
-            super.handleMessage(msg);
         }
     }
 
