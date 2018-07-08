@@ -29,6 +29,7 @@ dependencies {
     implementation files('libs/universal-image-loader-1.9.3.jar')
     compile 'org.greenrobot:greendao:3.2.2' // add library
     compile 'com.android.support:design:27.1.1'
+    compile 'com.jaredrummler:colorpicker:1.0.2'
 }
 
 

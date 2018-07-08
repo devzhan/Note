@@ -6,10 +6,10 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
-import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
@@ -17,28 +17,30 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fast.android.utils.InputUtils;
+import com.fast.android.view.rich.ResizeLinearLayout;
+import com.fast.android.view.rich.RichEditText;
+import com.jaredrummler.android.colorpicker.ColorPickerView;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.tcl.tcldemo.R;
-import com.fast.android.view.rich.ResizeLinearLayout;
-import com.fast.android.view.rich.RichEditText;
 
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;
 
-public class EditorActivity extends Activity implements View.OnClickListener {
+public class EditorActivity extends Activity implements View.OnClickListener, ColorPickerView.OnColorChangedListener {
     private static  final String TAG = "RichNote";
     private ResizeLinearLayout baseContent;
 
     private EditText articleTitle;
 
-    private RichEditText contentRichEditText;
+    private RichEditText mRichEditText;
 
     private TextView completeImg;
 
@@ -59,6 +61,8 @@ public class EditorActivity extends Activity implements View.OnClickListener {
     private InputHandler inputHandler = new InputHandler(this);
     private TextView mTextViewEditorWater;
     private LinearLayout mLinearLayout;
+    private ColorPickerView mColorPickerView;
+    private ScrollView mScrollView;
 
 
     private class InputHandler extends Handler {
@@ -93,24 +97,33 @@ public class EditorActivity extends Activity implements View.OnClickListener {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editor);
+
+
+//        appHeight = getAppHeight();
+        initImageLoader(this);
+        init();
+    }
+
+    private void init() {
         baseContent = (ResizeLinearLayout) findViewById(R.id.editor_base_content);
 
         completeImg = (TextView) findViewById(R.id.editor_attachment);
         galleryImg = (ImageView) findViewById(R.id.editor_gallery_img);
 
         articleTitle = (EditText) findViewById(R.id.editor_article_title);
-        contentRichEditText = (RichEditText) findViewById(R.id.editor_edit_area);
+        mRichEditText = (RichEditText) findViewById(R.id.editor_edit_area);
+        mTextViewEditorWater = findViewById(R.id.editor_water);
+        mLinearLayout = findViewById(R.id.ll_operate);
+        mTextViewEditorWater.setOnClickListener(this);
+        mColorPickerView = findViewById(R.id.cpv_color_picker_view);
+        mColorPickerView.setOnColorChangedListener(this);
+//        mColorPickerView.setColor(Color.parseColor("FF000000"), true);
+        mScrollView = findViewById(R.id.sv_background);
+//        mScrollView.setBackgroundColor(Color.parseColor("FF000000"));
 
-        appHeight = getAppHeight();
-        initImageLoader(this);
-        init();
-    }
-
-    private void init() {
         baseContent.setOnResizeListener(new ResizeLinearLayout.OnResizeListener() {
             @Override
             public void OnResize(int w, int h, int oldw, int oldh) {
-                // TODO Auto-generated method stub
                 int selector = SHOW_TOOLS;
                 if (h < oldh) {
                     selector = SHOW_KEY_BOARD;
@@ -128,7 +141,7 @@ public class EditorActivity extends Activity implements View.OnClickListener {
             public void onClick(View arg0) {
                 // TODO Auto-generated method stub
                 Toast.makeText(EditorActivity.this,
-                        contentRichEditText.getText().toString(),
+                        mRichEditText.getText().toString(),
                         Toast.LENGTH_SHORT).show();
             }
         });
@@ -141,9 +154,7 @@ public class EditorActivity extends Activity implements View.OnClickListener {
             }
         });
 
-        mTextViewEditorWater = findViewById(R.id.editor_water);
-        mLinearLayout = findViewById(R.id.ll_operate);
-        mTextViewEditorWater.setOnClickListener(this);
+
     }
 
     /**
@@ -239,11 +250,11 @@ public class EditorActivity extends Activity implements View.OnClickListener {
                     // ImageUtils.loadImage(resolver.openInputStream(originalUri));
                     originalBitmap = ImageLoader.getInstance().loadImageSync(
                             originalUri.toString());
-                    int richCount = contentRichEditText.getRichText().length();
+                    int richCount = mRichEditText.getRichText().length();
                     Log.i(TAG, "richCount==="+richCount);
 
                     if (originalBitmap != null) {
-                        contentRichEditText.addImage(originalBitmap,
+                        mRichEditText.addImage(originalBitmap,
                                 getAbsoluteImagePath(originalUri));
                     } else {
                         Toast.makeText(this, "获取图片失败", Toast.LENGTH_LONG).show();
@@ -315,6 +326,14 @@ public class EditorActivity extends Activity implements View.OnClickListener {
                 break;
 
         }
+
+    }
+
+    @Override
+    public void onColorChanged(int newColor) {
+        Log.i("Note","newColor===="+newColor);
+        mScrollView.setBackgroundColor(newColor);
+        mRichEditText.setBackgroundColor(newColor);
 
     }
 }
